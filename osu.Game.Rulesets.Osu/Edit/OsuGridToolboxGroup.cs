@@ -112,7 +112,8 @@ namespace osu.Game.Rulesets.Osu.Edit
             };
 
             Spacing.Value = editorBeatmap.BeatmapInfo.GridSize;
-            StartPosition.Value = new Vector2(editorBeatmap.BeatmapInfo.GridOriginX, editorBeatmap.BeatmapInfo.GridOriginY);
+            StartPositionX.Value = editorBeatmap.BeatmapInfo.GridOriginX;
+            StartPositionY.Value = editorBeatmap.BeatmapInfo.GridOriginY;
             GridLinesRotation.Value = editorBeatmap.BeatmapInfo.GridRotation;
         }
 

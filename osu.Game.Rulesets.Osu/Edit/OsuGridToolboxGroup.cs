@@ -27,7 +27,6 @@ namespace osu.Game.Rulesets.Osu.Edit
         {
             MinValue = 0f,
             MaxValue = OsuPlayfield.BASE_SIZE.X,
-            Precision = 1f
         };
 
         /// <summary>
@@ -37,7 +36,6 @@ namespace osu.Game.Rulesets.Osu.Edit
         {
             MinValue = 0f,
             MaxValue = OsuPlayfield.BASE_SIZE.Y,
-            Precision = 1f
         };
 
         /// <summary>
@@ -47,7 +45,6 @@ namespace osu.Game.Rulesets.Osu.Edit
         {
             MinValue = 4f,
             MaxValue = 128f,
-            Precision = 1f
         };
 
         /// <summary>
@@ -57,7 +54,6 @@ namespace osu.Game.Rulesets.Osu.Edit
         {
             MinValue = -45f,
             MaxValue = 45f,
-            Precision = 1f
         };
 
         /// <summary>
@@ -123,24 +119,24 @@ namespace osu.Game.Rulesets.Osu.Edit
 
             StartPositionX.BindValueChanged(x =>
             {
-                startPositionXSlider.ContractedLabelText = $"X: {x.NewValue:N0}";
-                startPositionXSlider.ExpandedLabelText = $"X Offset: {x.NewValue:N0}";
+                startPositionXSlider.ContractedLabelText = $"X: {x.NewValue:#,0.##}";
+                startPositionXSlider.ExpandedLabelText = $"X Offset: {x.NewValue:#,0.##}";
                 StartPosition.Value = new Vector2(x.NewValue, StartPosition.Value.Y);
                 editorBeatmap.BeatmapInfo.GridOriginX = StartPosition.Value.X;
             }, true);
 
             StartPositionY.BindValueChanged(y =>
             {
-                startPositionYSlider.ContractedLabelText = $"Y: {y.NewValue:N0}";
-                startPositionYSlider.ExpandedLabelText = $"Y Offset: {y.NewValue:N0}";
+                startPositionYSlider.ContractedLabelText = $"Y: {y.NewValue:#,0.##}";
+                startPositionYSlider.ExpandedLabelText = $"Y Offset: {y.NewValue:#,0.##}";
                 StartPosition.Value = new Vector2(StartPosition.Value.X, y.NewValue);
                 editorBeatmap.BeatmapInfo.GridOriginY = StartPosition.Value.Y;
             }, true);
 
             Spacing.BindValueChanged(spacing =>
             {
-                spacingSlider.ContractedLabelText = $"S: {spacing.NewValue:N0}";
-                spacingSlider.ExpandedLabelText = $"Spacing: {spacing.NewValue:N0}";
+                spacingSlider.ContractedLabelText = $"S: {spacing.NewValue:#,0.##}";
+                spacingSlider.ExpandedLabelText = $"Spacing: {spacing.NewValue:#,0.##}";
                 SpacingVector.Value = new Vector2(spacing.NewValue);
                 editorBeatmap.BeatmapInfo.GridSize = spacing.NewValue;
             }, true);

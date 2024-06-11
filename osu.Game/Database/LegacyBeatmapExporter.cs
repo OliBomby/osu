@@ -94,13 +94,16 @@ namespace osu.Game.Database
                 foreach (var pathControlPoint in newControlPoints)
                 {
                     pathControlPoint.Position = new Vector2(
-                        (float)Math.Floor(pathControlPoint.Position.X),
-                        (float)Math.Floor(pathControlPoint.Position.Y));
+                        MathF.Floor(pathControlPoint.Position.X),
+                        MathF.Floor(pathControlPoint.Position.Y));
                 }
 
                 hasPath.Path.ControlPoints.Clear();
                 hasPath.Path.ControlPoints.AddRange(newControlPoints);
             }
+
+            // Stable expects the GridSize property to be an integer so we truncate it
+            playableBeatmap.BeatmapInfo.GridSize = MathF.Floor(playableBeatmap.BeatmapInfo.GridSize);
 
             // Encode to legacy format
             var stream = new MemoryStream();

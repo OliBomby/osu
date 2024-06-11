@@ -337,7 +337,19 @@ namespace osu.Game.Beatmaps.Formats
                     break;
 
                 case @"GridSize":
-                    beatmap.BeatmapInfo.GridSize = Parsing.ParseInt(pair.Value);
+                    beatmap.BeatmapInfo.GridSize = Parsing.ParseFloat(pair.Value);
+                    break;
+
+                case @"GridOriginX":
+                    beatmap.BeatmapInfo.GridOriginX = Parsing.ParseFloat(pair.Value);
+                    break;
+
+                case @"GridOriginY":
+                    beatmap.BeatmapInfo.GridOriginY = Parsing.ParseFloat(pair.Value);
+                    break;
+
+                case @"GridRotation":
+                    beatmap.BeatmapInfo.GridRotation = Parsing.ParseFloat(pair.Value);
                     break;
 
                 case @"TimelineZoom":

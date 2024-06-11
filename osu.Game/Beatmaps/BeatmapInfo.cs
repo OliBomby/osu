@@ -171,7 +171,13 @@ namespace osu.Game.Beatmaps
 
         public int BeatDivisor { get; set; } = 4;
 
-        public int GridSize { get; set; }
+        public float GridSize { get; set; }
+
+        public float GridOriginX { get; set; } = 256;
+
+        public float GridOriginY { get; set; } = 192;
+
+        public float GridRotation { get; set; }
 
         public double TimelineZoom { get; set; } = 1.0;
 

@@ -112,6 +112,8 @@ namespace osu.Game.Rulesets.Osu.Edit
             };
 
             Spacing.Value = editorBeatmap.BeatmapInfo.GridSize;
+            StartPosition.Value = new Vector2(editorBeatmap.BeatmapInfo.GridOriginX, editorBeatmap.BeatmapInfo.GridOriginY);
+            GridLinesRotation.Value = editorBeatmap.BeatmapInfo.GridRotation;
         }
 
         protected override void LoadComplete()
@@ -123,6 +125,7 @@ namespace osu.Game.Rulesets.Osu.Edit
                 startPositionXSlider.ContractedLabelText = $"X: {x.NewValue:N0}";
                 startPositionXSlider.ExpandedLabelText = $"X Offset: {x.NewValue:N0}";
                 StartPosition.Value = new Vector2(x.NewValue, StartPosition.Value.Y);
+                editorBeatmap.BeatmapInfo.GridOriginX = StartPosition.Value.X;
             }, true);
 
             StartPositionY.BindValueChanged(y =>
@@ -130,6 +133,7 @@ namespace osu.Game.Rulesets.Osu.Edit
                 startPositionYSlider.ContractedLabelText = $"Y: {y.NewValue:N0}";
                 startPositionYSlider.ExpandedLabelText = $"Y Offset: {y.NewValue:N0}";
                 StartPosition.Value = new Vector2(StartPosition.Value.X, y.NewValue);
+                editorBeatmap.BeatmapInfo.GridOriginY = StartPosition.Value.Y;
             }, true);
 
             Spacing.BindValueChanged(spacing =>
@@ -137,13 +141,14 @@ namespace osu.Game.Rulesets.Osu.Edit
                 spacingSlider.ContractedLabelText = $"S: {spacing.NewValue:N0}";
                 spacingSlider.ExpandedLabelText = $"Spacing: {spacing.NewValue:N0}";
                 SpacingVector.Value = new Vector2(spacing.NewValue);
-                editorBeatmap.BeatmapInfo.GridSize = (int)spacing.NewValue;
+                editorBeatmap.BeatmapInfo.GridSize = spacing.NewValue;
             }, true);
 
             GridLinesRotation.BindValueChanged(rotation =>
             {
                 gridLinesRotationSlider.ContractedLabelText = $"R: {rotation.NewValue:#,0.##}";
                 gridLinesRotationSlider.ExpandedLabelText = $"Rotation: {rotation.NewValue:#,0.##}";
+                editorBeatmap.BeatmapInfo.GridRotation = rotation.NewValue;
             }, true);
         }
 

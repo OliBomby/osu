@@ -93,8 +93,9 @@ namespace osu.Game.Database
         /// 39   2023-12-19    Migrate any EndTimeObjectCount and TotalObjectCount values of 0 to -1 to better identify non-calculated values.
         /// 40   2023-12-21    Add ScoreInfo.Version to keep track of which build scores were set on.
         /// 41   2024-04-17    Add ScoreInfo.TotalScoreWithoutMods for future mod multiplier rebalances.
+        /// 42   2024-06-11    Add GridOriginX, GridOriginY, and GridRotation to BeatmapInfo. Converted GridSize to float.
         /// </summary>
-        private const int schema_version = 41;
+        private const int schema_version = 42;
 
         /// <summary>
         /// Lock object which is held during <see cref="BlockAllOperations"/> sections, blocking realm retrieval during blocking periods.
@@ -1144,6 +1145,32 @@ namespace osu.Game.Database
                         {
                             Logger.Log($@"Failed to populate total score without mods for score {score.ID}: {ex}", LoggingTarget.Database);
                         }
+                    }
+
+                    break;
+
+                case 42:
+                    string beatmapInfoClassName = getMappedOrOriginalName(typeof(BeatmapInfo));
+
+                    if (!migration.OldRealm.Schema.TryFindObjectSchema(beatmapInfoClassName, out _))
+                        return;
+
+                    var oldBeatmapInfo = migration.OldRealm.DynamicApi.All(beatmapInfoClassName);
+                    var newBeatmapInfo = migration.NewRealm.All<BeatmapInfo>().ToList();
+
+                    for (int i = 0; i < newBeatmapInfo.Count; i++)
+                    {
+                        dynamic oldItem = oldBeatmapInfo.ElementAt(i);
+                        var newItem = newBeatmapInfo.ElementAt(i);
+
+                        newItem.GridOriginX = 256;
+                        newItem.GridOriginY = 192;
+
+                        if (oldItem.GridSize == null)
+                            continue;
+
+                        long gridSize = oldItem.GridSize;
+                        newItem.GridSize = gridSize;
                     }
 
                     break;

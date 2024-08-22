@@ -19,10 +19,17 @@ namespace osu.Game.Audio
         public const string HIT_WHISTLE = @"hitwhistle";
         public const string HIT_FINISH = @"hitfinish";
         public const string HIT_CLAP = @"hitclap";
-
         public const string BANK_NORMAL = @"normal";
         public const string BANK_SOFT = @"soft";
         public const string BANK_DRUM = @"drum";
+
+        /// <summary>
+        /// A special bank name that is used in the editor UI.
+        /// When selected and in placement mode, the bank of the last hit object will always be used.
+        /// When assigned to a <see cref="HitSampleInfo"/> which is not <see cref="HIT_NORMAL"/>,
+        /// it will inherit the bank from the <see cref="HIT_NORMAL"/> in the same group or <see cref="BANK_SOFT"/> if it doesn't exist.
+        /// </summary>
+        public const string BANK_AUTO = "auto";
 
         // new sample used exclusively by taiko for now.
         public const string HIT_FLOURISH = "hitflourish";

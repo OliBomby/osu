@@ -158,8 +158,15 @@ namespace osu.Game.Skinning
             samplesContainer.RemoveAll(s => s.IsInPool, false);
             samplesContainer.Clear();
 
-            foreach (var s in samples)
+            // Allow hit samples to use the hitnormal bank if they are set to auto.
+            string defaultBank = Samples.OfType<HitSampleInfo>().FirstOrDefault(o => o.Name == HitSampleInfo.HIT_NORMAL)?.Bank ?? HitSampleInfo.BANK_SOFT;
+
+            foreach (var sampleInfo in samples)
             {
+                var s = sampleInfo;
+                if (s is HitSampleInfo h && h.Bank == HitSampleInfo.BANK_AUTO)
+                    s = h.With(newBank: defaultBank);
+
                 var sample = samplePool?.GetPooledSample(s) ?? new PoolableSkinnableSample(s);
                 sample.Looping = Looping;
                 sample.Volume.Value = Math.Max(s.Volume, MinimumSampleVolume) / 100.0;

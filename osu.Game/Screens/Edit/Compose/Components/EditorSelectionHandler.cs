@@ -19,12 +19,6 @@ namespace osu.Game.Screens.Edit.Compose.Components
 {
     public partial class EditorSelectionHandler : SelectionHandler<HitObject>
     {
-        /// <summary>
-        /// A special bank name that is only used in the editor UI.
-        /// When selected and in placement mode, the bank of the last hit object will always be used.
-        /// </summary>
-        public const string HIT_BANK_AUTO = "auto";
-
         [Resolved]
         protected EditorBeatmap EditorBeatmap { get; private set; } = null!;
 
@@ -63,7 +57,7 @@ namespace osu.Game.Screens.Edit.Compose.Components
         /// </summary>
         private void createStateBindables()
         {
-            foreach (string bankName in HitSampleInfo.AllBanks.Prepend(HIT_BANK_AUTO))
+            foreach (string bankName in HitSampleInfo.AllBanks.Prepend(HitSampleInfo.BANK_AUTO))
             {
                 var bindable = new Bindable<TernaryState>
                 {
@@ -85,7 +79,7 @@ namespace osu.Game.Screens.Edit.Compose.Components
                             {
                                 // Auto should never apply when there is a selection made.
                                 // This is also required to stop a bindable feedback loop when a HitObject has zero samples (and LINQ `All` below becomes true).
-                                if (bankName == HIT_BANK_AUTO)
+                                if (bankName == HitSampleInfo.BANK_AUTO)
                                     break;
 
                                 // Never remove a sample bank.
@@ -111,7 +105,7 @@ namespace osu.Game.Screens.Edit.Compose.Components
                             {
                                 // Auto should just not apply if there's a selection already made.
                                 // Maybe we could make it a disabled button in the future, but right now the editor buttons don't support disabled state.
-                                if (bankName == HIT_BANK_AUTO)
+                                if (bankName == HitSampleInfo.BANK_AUTO)
                                 {
                                     bindable.Value = TernaryState.False;
                                     break;

@@ -81,7 +81,8 @@ namespace osu.Game.Rulesets.Osu.Skinning
             double spanProgress = slider.ProgressAt(completionProgress);
 
             double start = 0;
-            double end = SnakingIn.Value ? Math.Clamp((Time.Current - (slider.StartTime - slider.TimePreempt)) / (slider.TimePreempt / 3), 0, 1) : 1;
+            double snakeInDuration = drawableSlider.SnakeInAtSliderVelocity ? slider.SpanDuration : slider.TimePreempt / 3;
+            double end = SnakingIn.Value ? Math.Clamp((Time.Current - (slider.StartTime - slider.TimePreempt)) / snakeInDuration, 0, 1) : 1;
 
             if (span >= slider.SpanCount() - 1)
             {

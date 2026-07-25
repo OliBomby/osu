@@ -39,6 +39,11 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
 
         public SkinnableDrawable Body { get; private set; }
 
+        /// <summary>
+        /// Whether the slider body should snake in at the same path velocity as the slider ball.
+        /// </summary>
+        public bool SnakeInAtSliderVelocity { get; set; }
+
         private ShakeContainer shakeContainer;
 
         protected override IEnumerable<Drawable> DimmablePieces => new Drawable[]

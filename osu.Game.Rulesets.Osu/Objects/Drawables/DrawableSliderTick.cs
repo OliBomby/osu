@@ -16,11 +16,15 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
 {
     public partial class DrawableSliderTick : DrawableOsuHitObject
     {
+        public new SliderTick HitObject => (SliderTick)base.HitObject;
+
         public const double ANIM_DURATION = 150;
 
         public const float DEFAULT_TICK_SIZE = 16;
 
         protected DrawableSlider DrawableSlider => (DrawableSlider)ParentHitObject;
+
+        public bool RevealWithSliderBody { get; set; }
 
         private SkinnableDrawable scaleContainer;
 
@@ -70,6 +74,14 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset) => DrawableSlider.SliderInputManager.TryJudgeNestedObject(this, timeOffset);
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (RevealWithSliderBody)
+                scaleContainer.Alpha = DrawableSlider.SliderBody?.SnakedEnd >= HitObject.PathProgress ? 1 : 0;
+        }
 
         protected override void UpdateInitialTransforms()
         {
